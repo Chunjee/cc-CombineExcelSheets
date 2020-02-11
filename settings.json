@@ -1,0 +1,7 @@
+{
+    "inputdir": "%A_ScriptDir%\\input files\\*.xlsm",
+    "outfile": "%A_ScriptDir%\\OUTPUT %Systemtime%.xlsx",
+    "filtershipvia": ["UR97", "UR93", "\"\""],
+
+    "debuglinelimit": 10
+}

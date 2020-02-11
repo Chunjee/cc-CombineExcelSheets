@@ -1,0 +1,21 @@
+{
+  "name": "excelcombine.ahk",
+  "version": "0.0.1",
+  "description": "combine excel documents together",
+  "main": "app.ahk",
+  "dependencies": {
+    "biga.ahk": "^0.22.0",
+    "json.ahk": "github:chunjee/json.ahk",
+    "transformStringVars.ahk": "github:chunjee/transformStringVars.ahk"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ahk",
+    "excel"
+  ],
+  "author": "Chunjee",
+  "license": "MIT"
+}
