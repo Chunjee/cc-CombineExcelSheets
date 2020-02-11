@@ -29,8 +29,17 @@ outfileWriteIndex := 1
 ;\--/--\--/--\--/--\--/
 
 ; create a new excel file to write everything to
-Excel1.Workbooks.Add ; create a new workbook
-Excel1.Visible := true ; make Excel Application visible
+Excel1.Workbooks.Add
+; make Excel Application visible
+Excel1.Visible := true 
+; label, size, and color columns here
+Excel1.Columns("A").ColumnWidth := 16
+Excel1.Range("A1").Value := "DIST_ORDER"
+Excel1.Range("B1").Value := "TRACKING_NBR"
+Excel1.Range("C1").Value := "UPS_STATUS"
+Excel1.Range("D1").Value := "SHIP_VIA"
+Excel1.Range("E1").Value := "COMMENT"
+
 
 ; loop each file in the inputdir location
 loop, Files, % transformStringVars(settings.inputdir)
@@ -82,13 +91,7 @@ loop, Files, % transformStringVars(settings.inputdir)
     }
 }
 
-; label and size colums here
-Excel1.Columns("A").ColumnWidth := 16
-Excel1.Range("A1").Value := "DIST_ORDER"
-Excel1.Range("B1").Value := "TRACKING_NBR"
-Excel1.Range("C1").Value := "UPS_STATUS"
-Excel1.Range("D1").Value := "SHIP_VIA"
-Excel1.Range("E1").Value := "COMMENT"
+
 
 
 
