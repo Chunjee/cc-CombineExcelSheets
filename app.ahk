@@ -17,11 +17,11 @@ SetBatchLines, -1
 
 ; class instances
 A := new biga()
-Excel1 := ComObjCreate("Excel.Application") ;writer
-Excel2 := ComObjCreate("Excel.Application") ;reader
+excel1 := ComObjCreate("Excel.Application") ;writer
+excel2 := ComObjCreate("Excel.Application") ;reader
 ; ~~~ variables ~~~
-FileRead, OutputVar, % A_ScriptDir "\settings.json"
-settings := JSON.parse(OutputVar)
+FileRead, outputVar, % A_ScriptDir "\settings.json"
+settings := JSON.parse(outputVar)
 outfileWriteIndex := 1
 
 ;/--\--/--\--/--\--/--\
@@ -29,16 +29,16 @@ outfileWriteIndex := 1
 ;\--/--\--/--\--/--\--/
 
 ; create a new excel file to write everything to
-Excel1.Workbooks.Add
+excel1.Workbooks.Add
 ; make Excel Application visible
-Excel1.Visible := true 
+excel1.Visible := true 
 ; label, size, and color columns here
-Excel1.Columns("A").ColumnWidth := 16
-Excel1.Range("A1").Value := "DIST_ORDER"
-Excel1.Range("B1").Value := "TRACKING_NBR"
-Excel1.Range("C1").Value := "UPS_STATUS"
-Excel1.Range("D1").Value := "SHIP_VIA"
-Excel1.Range("E1").Value := "COMMENT"
+excel1.Columns("A").ColumnWidth := 16
+excel1.Range("A1").Value := "DIST_ORDER"
+excel1.Range("B1").Value := "TRACKING_NBR"
+excel1.Range("C1").Value := "UPS_STATUS"
+excel1.Range("D1").Value := "SHIP_VIA"
+excel1.Range("E1").Value := "COMMENT"
 
 
 ; loop each file in the inputdir location
@@ -49,7 +49,7 @@ loop, Files, % transformStringVars(settings.inputdir)
         continue 
     }
     ; open the excel file to be read
-    Excel2.Workbooks.Open(A_LoopFilePath)
+    excel2.Workbooks.Open(A_LoopFilePath)
 
     ; read each line
     While, (true) {
@@ -59,17 +59,17 @@ loop, Files, % transformStringVars(settings.inputdir)
         }
 
         line := {}
-        line.DIST_ORDER := Excel2.Range("A" A_Index).Value
+        line.DIST_ORDER := excel2.Range("A" A_Index).Value
         ; check that we are still seeing orders, excel doesn't go on forever
         if (A.size(line.DIST_ORDER) < 5 || ( settings.debuglinelimit != "" && A_Index > settings.debuglinelimit)) {
             break
         }
 
         ; ok this line has activity, read the other data we're interested in
-        line.TRACKING_NBR   := Excel2.Range("F" A_Index).Value
-        line.SHIP_VIA       := Excel2.Range("G" A_Index).Value
-        line.UPS_STATUS     := Excel2.Range("K" A_Index).Value
-        line.COMMENT        := Excel2.Range("L" A_Index).Value
+        line.TRACKING_NBR   := excel2.Range("F" A_Index).Value
+        line.SHIP_VIA       := excel2.Range("G" A_Index).Value
+        line.UPS_STATUS     := excel2.Range("K" A_Index).Value
+        line.COMMENT        := excel2.Range("L" A_Index).Value
 
         ; FILTER OUT LINES WE DON'T CARE ABOUT HERE
         if (A.indexOf(settings.filtershipvia, line.SHIP_VIA) != -1) {
@@ -83,11 +83,11 @@ loop, Files, % transformStringVars(settings.inputdir)
 
         ; write data out to OUT FILE
         outfileWriteIndex++
-        Excel1.Range("A" outfileWriteIndex).Value := line.DIST_ORDER
-        Excel1.Range("B" outfileWriteIndex).Value := line.TRACKING_NBR
-        Excel1.Range("C" outfileWriteIndex).Value := line.UPS_STATUS
-        Excel1.Range("D" outfileWriteIndex).Value := line.SHIP_VIA
-        Excel1.Range("E" outfileWriteIndex).Value := line.COMMENT
+        excel1.Range("A" outfileWriteIndex).Value := line.DIST_ORDER
+        excel1.Range("B" outfileWriteIndex).Value := line.TRACKING_NBR
+        excel1.Range("C" outfileWriteIndex).Value := line.UPS_STATUS
+        excel1.Range("D" outfileWriteIndex).Value := line.SHIP_VIA
+        excel1.Range("E" outfileWriteIndex).Value := line.COMMENT
     }
 }
 
@@ -97,12 +97,24 @@ loop, Files, % transformStringVars(settings.inputdir)
 
 ; save the new excel file
 FormatTime, Systemtime, A_Now, yyyyMMddhhmm
-Savepath := transformStringVars(settings.outfile)
-Excel1.ActiveWorkbook.SaveAs(Savepath)
-Excel1.ActiveWorkbook.saved := true
+savePath := transformStringVars(settings.outfile)
+excel1.ActiveWorkbook.SaveAs(savePath)
+excel1.ActiveWorkbook.saved := true
 
 ; Exit Excel COM objects 
-Excel1.Quit
-Excel2.Quit
+excel1.Quit
+excel2.Quit
 
 exitapp, 1
+
+
+
+;/--\--/--\--/--\--/--\
+; Helper functions
+;\--/--\--/--\--/--\--/
+
+
+
+;/--\--/--\--/--\--/--\
+; functions
+;\--/--\--/--\--/--\--/

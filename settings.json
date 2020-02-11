@@ -3,5 +3,5 @@
     "outfile": "%A_ScriptDir%\\OUTPUT %Systemtime%.xlsx",
     "filtershipvia": ["UR97", "UR93", "\"\""],
 
-    "debuglinelimit": 10
+    "debuglinelimit": 100
 }
