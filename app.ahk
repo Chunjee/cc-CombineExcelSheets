@@ -43,8 +43,7 @@ loop, Files, % transformStringVars(settings.inputdir)
     Excel2.Workbooks.Open(A_LoopFilePath)
 
     ; read each line
-    readingGate := true
-    While, (readingGate == true) {
+    While, (true) {
         ; skip line 1 as this is mostly labels
         if (A_Index == 1) {
             continue
@@ -53,7 +52,7 @@ loop, Files, % transformStringVars(settings.inputdir)
         line := {}
         line.DIST_ORDER := Excel2.Range("A" A_Index).Value
         ; check that we are still seeing orders, excel doesn't go on forever
-        if (A.size(line.DIST_ORDER) < 5 || A_Index > settings.debuglinelimit) {
+        if (A.size(line.DIST_ORDER) < 5 || ( settings.debuglinelimit != "" && A_Index > settings.debuglinelimit)) {
             break
         }
 

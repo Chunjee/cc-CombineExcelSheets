@@ -1,5 +1,5 @@
 {
-  "name": "excelcombine.ahk",
+  "name": "combineexcelsheets.ahk",
   "version": "0.0.1",
   "description": "combine excel documents together",
   "main": "app.ahk",
